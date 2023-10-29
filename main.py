@@ -7,7 +7,7 @@ icon = pygame.image.load("images/icon.png")
 pygame.display.set_icon(icon)
 bg = pygame.image.load("images/backfon.jpg")
 
-
+#Test
 
 running = True
 a, b =0, 0
