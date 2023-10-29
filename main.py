@@ -22,12 +22,3 @@ while running:
         if event.type == pygame.QUIT:
             running = False
             pygame.quit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_a:
-                a=a+1
-            elif event.key == pygame.K_d:
-                a=a-1
-            if event.key == pygame.K_w:
-                b=b+1
-            elif event.key == pygame.K_s:
-                b=b-1
