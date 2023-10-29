@@ -72,6 +72,7 @@ while running:
             jump_count = 7
 
 # test
+    #2222
     if player_anim_count == 5:
         player_anim_count = 0
     else:
