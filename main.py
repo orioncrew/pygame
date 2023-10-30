@@ -4,26 +4,28 @@ clock = pygame.time.Clock()
 pygame.init()
 screen = pygame.display.set_mode((600, 375))
 pygame.display.set_caption("abc")
-icon = pygame.image.load("images/icon.png")
+icon = pygame.image.load("images/icon.png").convert_alpha()
 pygame.display.set_icon(icon)
-bg = pygame.image.load("images/backfon.jpg")
-player = pygame.image.load("images/player_left/tile000.png")
+bg = pygame.image.load("images/backfon.jpg").convert_alpha()
+ghost = pygame.image.load("images/ghost.png").convert_alpha()
+ghost_list_in_game = []
+player = pygame.image.load("images/player_left/tile000.png").convert_alpha()
 walk_left = [
-    pygame.image.load("images/player_left/tile000.png"),
-    pygame.image.load("images/player_left/tile001.png"),
-    pygame.image.load("images/player_left/tile002.png"),
-    pygame.image.load("images/player_left/tile003.png"),
-    pygame.image.load("images/player_left/tile004.png"),
-    pygame.image.load("images/player_left/tile005.png")
+    pygame.image.load("images/player_left/tile000.png").convert_alpha(),
+    pygame.image.load("images/player_left/tile001.png").convert_alpha(),
+    pygame.image.load("images/player_left/tile002.png").convert_alpha(),
+    pygame.image.load("images/player_left/tile003.png").convert_alpha(),
+    pygame.image.load("images/player_left/tile004.png").convert_alpha(),
+    pygame.image.load("images/player_left/tile005.png").convert_alpha()
 ]
 
 walk_right = [
-    pygame.image.load("images/player_right/tile000.png"),
-    pygame.image.load("images/player_right/tile001.png"),
-    pygame.image.load("images/player_right/tile002.png"),
-    pygame.image.load("images/player_right/tile003.png"),
-    pygame.image.load("images/player_right/tile004.png"),
-    pygame.image.load("images/player_right/tile005.png")
+    pygame.image.load("images/player_right/tile000.png").convert_alpha(),
+    pygame.image.load("images/player_right/tile001.png").convert_alpha(),
+    pygame.image.load("images/player_right/tile002.png").convert_alpha(),
+    pygame.image.load("images/player_right/tile003.png").convert_alpha(),
+    pygame.image.load("images/player_right/tile004.png").convert_alpha(),
+    pygame.image.load("images/player_right/tile005.png").convert_alpha()
 ]
 bg_x = 0
 player_anim_count = 0
@@ -37,6 +39,9 @@ jump_count = 7
 bg_sound = pygame.mixer.Sound("sounds/bg.mp3")
 #bg_sound.play()
 
+ghost_timer = pygame.USEREVENT + 1
+pygame.time.set_timer(ghost_timer, 2000)
+
 
 running = True
 a, b =0, 0
@@ -45,6 +50,15 @@ while running:
     screen.blit(bg, (bg_x, 0))
     screen.blit(bg, (bg_x + 600, 0))
 
+    player_rect = walk_right[0].get_rect(topleft=(player_x, player_y))
+
+    if ghost_list_in_game:
+        for el in ghost_list_in_game:
+            screen.blit(ghost, el)
+            el.x -=10
+
+            if player_rect.colliderect(el):
+                print("Вы проиграли")
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
@@ -87,5 +101,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
             pygame.quit()
+        if event.type == ghost_timer:
+            ghost_list_in_game.append(ghost.get_rect(topleft = (602, 270)))
 
     clock.tick(10)
