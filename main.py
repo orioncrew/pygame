@@ -1,31 +1,33 @@
 import pygame
 
+#image_path = 'data/data/org.test.ghosthunter/files/app'
+image_path = ''
 clock = pygame.time.Clock()
 pygame.init()
 screen = pygame.display.set_mode((600, 375))
 pygame.display.set_caption("abc")
-icon = pygame.image.load("images/icon.png").convert_alpha()
+icon = pygame.image.load(image_path + "images/icon.png").convert_alpha()
 pygame.display.set_icon(icon)
-bg = pygame.image.load("images/backfon.jpg").convert_alpha()
-ghost = pygame.image.load("images/ghost.png").convert_alpha()
+bg = pygame.image.load(image_path + "images/backfon.jpg").convert_alpha()
+ghost = pygame.image.load(image_path + "images/ghost.png").convert_alpha()
 ghost_list_in_game = []
-player = pygame.image.load("images/player_left/tile000.png").convert_alpha()
+player = pygame.image.load(image_path + "images/player_left/tile000.png").convert_alpha()
 walk_left = [
-    pygame.image.load("images/player_left/tile000.png").convert_alpha(),
-    pygame.image.load("images/player_left/tile001.png").convert_alpha(),
-    pygame.image.load("images/player_left/tile002.png").convert_alpha(),
-    pygame.image.load("images/player_left/tile003.png").convert_alpha(),
-    pygame.image.load("images/player_left/tile004.png").convert_alpha(),
-    pygame.image.load("images/player_left/tile005.png").convert_alpha()
+    pygame.image.load(image_path + "images/player_left/tile000.png").convert_alpha(),
+    pygame.image.load(image_path + "images/player_left/tile001.png").convert_alpha(),
+    pygame.image.load(image_path + "images/player_left/tile002.png").convert_alpha(),
+    pygame.image.load(image_path + "images/player_left/tile003.png").convert_alpha(),
+    pygame.image.load(image_path + "images/player_left/tile004.png").convert_alpha(),
+    pygame.image.load(image_path + "images/player_left/tile005.png").convert_alpha()
 ]
 
 walk_right = [
-    pygame.image.load("images/player_right/tile000.png").convert_alpha(),
-    pygame.image.load("images/player_right/tile001.png").convert_alpha(),
-    pygame.image.load("images/player_right/tile002.png").convert_alpha(),
-    pygame.image.load("images/player_right/tile003.png").convert_alpha(),
-    pygame.image.load("images/player_right/tile004.png").convert_alpha(),
-    pygame.image.load("images/player_right/tile005.png").convert_alpha()
+    pygame.image.load(image_path + "images/player_right/tile000.png").convert_alpha(),
+    pygame.image.load(image_path + "images/player_right/tile001.png").convert_alpha(),
+    pygame.image.load(image_path + "images/player_right/tile002.png").convert_alpha(),
+    pygame.image.load(image_path + "images/player_right/tile003.png").convert_alpha(),
+    pygame.image.load(image_path + "images/player_right/tile004.png").convert_alpha(),
+    pygame.image.load(image_path + "images/player_right/tile005.png").convert_alpha()
 ]
 bg_x = 0
 player_anim_count = 0
@@ -33,7 +35,7 @@ player_speed = 5
 player_x = 150
 player_y = 250
 
-lable = pygame.font.Font("fonts/Roboto-Regular.ttf", 40)
+lable = pygame.font.Font(image_path + "fonts/Roboto-Regular.ttf", 40)
 lose_lable = lable.render("Вы проиграли!", False, (193, 196, 199))
 restart_lable = lable.render("Играть заново", False, (115, 132, 148))
 restart_lable_rect = restart_lable.get_rect(topleft=(180,200))
@@ -41,14 +43,14 @@ restart_lable_rect = restart_lable.get_rect(topleft=(180,200))
 is_jump = False
 jump_count = 7
 
-#bg_sound = pygame.mixer.Sound("sounds/bg.mp3")
+#bg_sound = pygame.mixer.Sound(image_path + "sounds/bg.mp3")
 #bg_sound.play()
 
 ghost_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(ghost_timer, 2000)
 
-bullets_left = 5
-bullet = pygame.image.load('images/bullet.png').convert_alpha()
+bullets_left = 100
+bullet = pygame.image.load(image_path + 'images/bullet.png').convert_alpha()
 bullets = []
 
 gameplay = True
@@ -116,7 +118,7 @@ while running:
         if bullets:
             for (i, el) in  enumerate(bullets):
                 screen.blit(bullet, (el.x, el.y))
-                el.x += 4
+                el.x += 20
 
                 if el.x > 630:
                     bullets.pop(i)
