@@ -47,6 +47,10 @@ jump_count = 7
 ghost_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(ghost_timer, 2000)
 
+bullets_left = 5
+bullet = pygame.image.load('images/bullet.png').convert_alpha()
+bullets = []
+
 gameplay = True
 
 running = True
@@ -106,6 +110,22 @@ while running:
         bg_x -= 2
         if bg_x <=-600:
             bg_x=0
+
+
+
+        if bullets:
+            for (i, el) in  enumerate(bullets):
+                screen.blit(bullet, (el.x, el.y))
+                el.x += 4
+
+                if el.x > 630:
+                    bullets.pop(i)
+
+                if ghost_list_in_game:
+                    for (index, ghost_el) in enumerate(ghost_list_in_game):
+                        if el.colliderect(ghost_el):
+                            ghost_list_in_game.pop(index)
+                            bullets.pop(i)
     else:
         screen.fill((87, 88, 89))
         screen.blit(lose_lable, (180, 100))
@@ -116,6 +136,8 @@ while running:
             gameplay = True
             player_x = 150
             ghost_list_in_game.clear()
+            bullets.clear()
+            bullets_left = 5
 
     pygame.display.update()
 
@@ -125,5 +147,8 @@ while running:
             pygame.quit()
         if event.type == ghost_timer:
             ghost_list_in_game.append(ghost.get_rect(topleft = (602, 270)))
+        if gameplay and event.type == pygame.KEYUP and event.key == pygame.K_b and bullets_left > 0:
+            bullets.append(bullet.get_rect(topleft=(player_x+30, player_y+30)))
+            bullets_left -=1
 
     clock.tick(10)
